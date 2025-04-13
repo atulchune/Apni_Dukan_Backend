@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DBCONNECTION")
+}
+
+model users {
+  id        Int     @id @default(autoincrement())
+  name      String
+  email     String
+  password  String
+  isDeleted Boolean
+}
+
+model category {
+  CategoryId  Int     @id @default(autoincrement())
+  title       String
+  description String
+  imageName   String
+  imageUrl    String
+  isDeleted   Boolean @default(false)
+  Products Products[]
+}
+
+model Products {
+  ProductId     Int         @id @default(autoincrement())
+  category      category    @relation(fields: [categoryId], references: [CategoryId])
+  categoryId    Int
+  ProductType   ProductType @relation(fields: [ProductTypeId], references: [ProductTypeId])
+  ProductTypeId Int
+  name          String
+  productInto   String?
+  Description   String?
+  ProductPrice  Int?
+  DiscountPrice Int?
+  Stock         Int?
+  ProductStatus String?
+  isDeleted     Boolean     @default(false)
+  Images        Images[]
+  orders    ProductInOrder[]
+}
+
+model Images {
+  productId    Int
+  productImage Products @relation(fields: [productId], references: [ProductId])
+  fileId      Int      @id @default(autoincrement())
+  fileName     String?
+  filePath     String?
+  fileType     String?
+  fileSize     Int
+  uploadDate   DateTime @default(now())
+  isDeleted    Boolean  @default(false)
+}
+
+model ProductType {
+  ProductTypeId Int        @id @default(autoincrement())
+  Products      Products[]
+  Type          String
+  isDeleted     Boolean
+  CreatedDate   String
+}
+
+model Order {
+  id                      Int         @id @default(autoincrement())
+  orderNumber             String
+  invoice                 Invoice?    @relation(fields: [invoiceId], references: [invoiceId])
+  invoiceId               String?     @unique
+  stripeCheckoutSessionId String?
+  stripeCustomerId        String
+  clerkUserId             String
+  customerName            String
+  email                   String
+  stripePaymentIntentId   String
+  products                ProductInOrder[]
+  createdAt               DateTime    @default(now())
+  updatedAt               DateTime    @updatedAt
+  currency                String
+  amountDiscount          Int         
+  totalPrice              Int
+  status                  String
+}
+
+model Invoice {
+  id                Int      @id @default(autoincrement())
+  invoiceId         String?  @unique
+  number            String?
+  hostedInvoiceUrl  String?
+  order             Order?   @relation
+}
+
+model ProductInOrder {
+  id        Int     @id @default(autoincrement())
+  productId Int
+  name      String
+  price     Float
+  quantity  Int
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   Int
+  product   Products @relation(fields: [productId], references: [ProductId])
+}
+
+
+

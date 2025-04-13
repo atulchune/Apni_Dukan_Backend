@@ -1,0 +1,49 @@
+{
+  "name": "nodemon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc && node dist/server.js",
+    "dev": "nodemon - exec 'ts-node' src/server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/express-session": "^1.18.1",
+    "@types/node": "^22.10.7",
+    "@types/pg": "^8.11.10",
+    "@types/redis": "^4.0.10",
+    "nodemon": "^3.1.9",
+    "prisma": "^6.5.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@clerk/clerk-sdk-node": "^5.1.6",
+    "@clerk/express": "^1.3.49",
+    "@prisma/adapter-pg": "^6.1.0",
+    "@prisma/client": "^6.5.0",
+    "@types/bcrypt": "^5.0.2",
+    "@types/ioredis": "^4.28.10",
+    "@types/multer": "^1.4.12",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^2.2.0",
+    "connect-redis": "^8.0.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "ioredis": "^5.5.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.2",
+    "pg": "^8.13.1",
+    "redis": "^4.7.0"
+  }
+}

@@ -1,0 +1,32 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const userControllers_1 = __importDefault(require("../controllers/userControllers"));
+const productController_1 = __importDefault(require("../controllers/productController"));
+const categoriesController_1 = __importDefault(require("../controllers/categoriesController"));
+// import Authenticate from '../middleware/authenticate'
+const clerkAuthenticate_1 = __importDefault(require("../middleware/clerkAuthenticate"));
+const upload_1 = __importDefault(require("../middleware/upload"));
+const orderController_1 = __importDefault(require("../controllers/orderController"));
+const userRoutes = (0, express_1.Router)();
+const userController = new userControllers_1.default();
+const productController = new productController_1.default();
+const categoriesController = new categoriesController_1.default();
+const orderController = new orderController_1.default();
+// const authenticate = new Authenticate();
+const clerkauthenticate = new clerkAuthenticate_1.default();
+userRoutes.post("/signup", userController.userRegister);
+userRoutes.use(clerkauthenticate.authenticate);
+userRoutes.post("/login", userController.userLogin);
+// userRoutes.use(authenticate.authenticate);
+userRoutes.post("/products_by_product_type", upload_1.default.none(), productController.fetchProductsBytypes);
+userRoutes.get("/productsId", productController.fetchProductsById);
+userRoutes.get("/categories", categoriesController.getCategories);
+userRoutes.get("/products_by_category", categoriesController.getProductByCategories);
+userRoutes.get("/searchProducts", productController.fetchProductBySearch);
+userRoutes.post("/createorder", orderController.createOrder);
+userRoutes.get("/getorderdetail", orderController.getOrderDetail);
+exports.default = userRoutes;

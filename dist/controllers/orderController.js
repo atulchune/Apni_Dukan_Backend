@@ -63,7 +63,7 @@ class OrdersController {
     getOrderDetail(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;
-            const userId = (_a = req.query.category) === null || _a === void 0 ? void 0 : _a.toLocaleString();
+            const userId = (_a = req.query.userId) === null || _a === void 0 ? void 0 : _a.toLocaleString();
             console.log("userId", userId);
             try {
                 const order = yield prisma.order.findMany({
@@ -90,7 +90,6 @@ class OrdersController {
                         createdAt: 'desc',
                     },
                 });
-                console.log(order, 'products');
                 if (order) {
                     res
                         .status(200)

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+const prisma = new PrismaClient();  
 
 class OrdersController {
     public async createOrder(req: Request, res: Response): Promise<void> {
@@ -66,8 +66,7 @@ class OrdersController {
 
 
     public async getOrderDetail(req: Request, res: Response): Promise<void> {
-
-        const  userId  = req.query.category?.toLocaleString();
+        const  userId  = req.query.userId?.toLocaleString();
         console.log("userId", userId)
         try {
             const order = await prisma.order.findMany({
@@ -95,7 +94,6 @@ class OrdersController {
                 },
               });
               
-            console.log(order,'products')
             if (order) {
                 res
                     .status(200)
